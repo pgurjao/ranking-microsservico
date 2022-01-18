@@ -1,1 +1,86 @@
-# ranking-microsservico
+# Instituto InfNet - PGPJAV01C1-3N-P1 - Serviços em Nuvem - 2021/2
+
+
+
+
+#### Prova Professor Leonardo Silva da Gloria
+#### Grupo: Eduardo Gaspar, Paulo Gurjão, Pedro Queiroz, William dos Santos Pereira<br><br>
+
+
+## Projeto de Bloco - Jogo RPG com Arquitetura em  Microserviços 
+
+O objetivo é projetar e implementar os serviços REST de um jogo de RPG baseado em turnos.<br><br>
+
+## Serviços a Serem Implementados pelo Grupo
+
+- [/ranking](#ranking) - este repositório
+- [/heroi](https://github.com/pgurjao/heroi-gen#heroi)
+- [/log](https://github.com/pgurjao/log-microsservico#log)
+
+Veja o <b>`swagger`</b> desses serviços [aqui](https://github.com/pgurjao/heroi-gen/blob/master/src/main/resources/swagger/swaggerHeroi-Gen.yaml). Cole o conteúdo do swagger em [editor.swagger.io](https://editor.swagger.io/) para ver com a formatação.
+
+
+<h2 id="ranking">Microserviço /ranking</h2>
+
+Exibe o ranking atual contendo uma lista com nome dos usuários e a respectiva pontuação no final da partida, ordenada de forma decrescente por pontos. Também calcula a pontuação do usuário ao final da partida e insere o resultado no ranking em ordem decrescente de pontos.
+
+Ao chamar via `GET` o ranking atual é retornado via JSON. Exemplo:
+
+```json
+{
+  {
+    "posicao": 1,
+    "idBatalha": "123456",
+    "usuario": "Bruninha Destruidora",
+    "pontuacao": 56
+  },
+  {
+    "posicao": 2,
+    "idBatalha": "654321",
+    "usuario": "Orc Killer",
+    "pontuacao": 51
+  },
+  {
+    "posicao": 3,
+    "idBatalha": "323111",
+    "usuario": "Zombie Slayer",
+    "pontuacao": 50
+  },
+  {
+    "posicao": 4,
+    "idBatalha": "555777",
+    "usuario": "Bruninha Destruidora",
+    "pontuacao": 49
+  }
+}
+```
+
+
+Ao chamar via `POST` é feita a inserção da pontuação de uma batalha finalizada do usuário no ranking. O serviço irá buscar no `/log` os turnos daquela idBatalha e computar a pontuação final. O body deve conter apenas o id da batalha finalizada a ser inserida no ranking. Exemplo:
+
+```json
+{
+  "idBatalha": "123456"
+}
+```
+
+
+## Critérios de Avalição (pontuação aproximada atiginda até o momento: 6.5)
+
+- [x] 1. ~~Implementar os serviços seguindo os padrões restfull: 2 pontos~~
+- [x] 2. ~~Receber configurações do servidor de configuração: 0.5 ponto~~
+- [x] 3. ~~Decodificar o Token JWT enviado para saber qual usuário está jogando: 0.5 ponto **(Pedro)**~~ <br>
+~~**Obs.: Se o seu MS não precisar saber qual o usuário está jogando o tópico 2 passa a valer 1 ponto**~~ <br>
+
+- [x] 4. ~~Se registrar no Eureka: 1 ponto **(Paulo)**~~
+- [ ] 5. Utilizar ClientSide Loadbalancer (Ribbon ou Feign): 1 ponto
+- [ ] 6. Ser resiliente a falhas: 1 a 2 pontos<br>
+**Obs.: 1 ponto = Implementar apenas um método visto, 2 pontos = implementar mais de 1** <br>
+
+- [ ] 7. Criar uma conta no Papertrail e utilizar agregação de Logs: 0.5 ponto **(William)**
+- [x] 8. ~~Utilizar Zipkin: 0.5 ponto~~
+- [x] 9. ~~Utilizar algum tipo de Cache: 0.5 ponto~~<br>
+~~**Obs.: Se o serviço implementado não possuir a necessidade de cache o Zipkin passa a valer 1 ponto. O aluno deverá explicar por que o cache não se faz necessário**~~ <br>
+
+- [x] 10. ~~Colocar os códigos em repositório público e com README: 0.5 ponto~~
+- [x] 11. ~~Utilizar swagger para documentar o serviço: 1 ponto~~
