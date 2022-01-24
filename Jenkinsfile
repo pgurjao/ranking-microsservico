@@ -14,12 +14,15 @@ pipeline {
             		echo 'Destruindo instancia atual'
             		sh './destroyRankingInstance.sh'
             		echo 'Instancia destruida com sucesso'
+            		
             		echo 'Deletando .jar antigo'
             		sh './removeRankingJar.sh'
             		echo 'Jar deletado com sucesso'
+            		
             		echo 'Copiando .jar novo para pasta definitiva'
-            		sh 'cp /var/lib/jenkins/workspace/ranking/target/ranking*.jar /home/ubuntu/ranking-microsservico/ranking.jar'
+            		sh 'cp /var/lib/jenkins/workspace/ranking/target/ranking-microsservico*.jar /home/ubuntu/ranking-microsservico/ranking.jar'
             		echo 'Jar copiado com sucesso'
+            		
             		echo 'Subindo instancia nova'
 					sh './runRanking.sh'
 					echo 'Instancia nova executada com sucesso'
