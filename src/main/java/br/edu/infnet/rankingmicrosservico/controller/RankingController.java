@@ -1,0 +1,63 @@
+package br.edu.infnet.rankingmicrosservico.controller;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.edu.infnet.rankingmicrosservico.dtos.UsuarioAutenticado;
+import br.edu.infnet.rankingmicrosservico.model.ItemRanking;
+import br.edu.infnet.rankingmicrosservico.service.RankingService;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Validated
+@RestController
+@RequestMapping("/ranking")
+public class RankingController {
+	
+	@Autowired
+	RankingService rankingService;
+	
+	@GetMapping(value = "")
+	public ResponseEntity<String> getRanking() {
+		
+		List<ItemRanking> ranking = rankingService.getRanking();
+		
+		if (ranking.size() == 0)
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.contentType(MediaType.TEXT_PLAIN).body("Ranking vazio!");
+		
+		return ResponseEntity.ok()
+				.contentType(MediaType.APPLICATION_JSON).body(ranking.toString());
+	}
+	
+	@PostMapping(value = "/{batalhaId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> gravarBatalha(
+			@Valid @PathVariable("batalhaId") Integer batalhaId,
+			Authentication auth) {
+
+		log.info("\n\n A batalha a ser rankeada é:\n{}", batalhaId);
+		
+		UsuarioAutenticado usuario = (UsuarioAutenticado) auth.getPrincipal();
+		
+		if (!rankingService.calculaRanking(batalhaId, usuario.getUsername())) {
+			return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN)
+			.body(rankingService.getErrorMessage());
+		} else {
+			return ResponseEntity.created(null).contentType(MediaType.TEXT_PLAIN)
+					.body("Inserido no ranking com sucesso!");
+		}
+	}
+}
