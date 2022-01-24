@@ -43,6 +43,7 @@ public class SegurancaConfig extends WebSecurityConfigurerAdapter{
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(
 				"/h2-console/**"
+				,"/actuator/**"
 				,"/ranking/"
 				,"/heroi-gen/herois"
 				,"/heroi-gen/herois/{id}")
