@@ -18,7 +18,7 @@ pipeline {
             		sh './removeRankingJar.sh'
             		echo 'Jar deletado com sucesso'
             		echo 'Copiando .jar novo para pasta definitiva'
-            		sh 'cp /var/lib/jenkins/workspace/ranking/target/ranking*.jar /home/ubuntu/ranking/ranking.jar'
+            		sh 'cp /var/lib/jenkins/workspace/ranking/target/ranking*.jar /home/ubuntu/ranking-microsservico/ranking.jar'
             		echo 'Jar copiado com sucesso'
             		echo 'Subindo instancia nova'
 					sh './runRanking.sh'
