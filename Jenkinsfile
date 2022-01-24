@@ -10,7 +10,7 @@ pipeline {
         stage('Deploy') { 
             steps {
 				// sh 'PM2_HOME=\'/home/ubuntu/.pm2\' pm2 delete ranking'
-            	dir('/home/ubuntu/') {
+            	dir('/home/ubuntu/ranking-microsservico') {
             		echo 'Destruindo instancia atual'
             		sh './destroyRankingInstance.sh'
             		echo 'Instancia destruida com sucesso'
