@@ -10,13 +10,13 @@ pipeline {
         stage('Deploy') { 
             steps {
 				// sh 'PM2_HOME=\'/home/ubuntu/.pm2\' pm2 delete ranking'
-            	dir('/home/ubuntu/ranking-microsservico') {
+            	dir('/home/ubuntu') {
             		echo 'Destruindo instancia atual'
-            		sh './destroyRankingInstance.sh'
+            		sh '.ranking-microsservico/destroyRankingInstance.sh'
             		echo 'Instancia destruida com sucesso'
             		
             		echo 'Deletando .jar antigo'
-            		sh './removeRankingJar.sh'
+            		sh '.ranking-microsservico/removeRankingJar.sh'
             		echo 'Jar deletado com sucesso'
             		
             		echo 'Copiando .jar novo para pasta definitiva'
@@ -24,7 +24,7 @@ pipeline {
             		echo 'Jar copiado com sucesso'
             		
             		echo 'Subindo instancia nova'
-					sh './runRanking.sh'
+					sh '.ranking-microsservico/runRanking.sh'
 					echo 'Instancia nova executada com sucesso'
 				}
             }
