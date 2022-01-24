@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.edu.infnet.rankingmicrosservico.model.ItemRanking;
 import br.edu.infnet.rankingmicrosservico.model.Turno;
-import br.edu.infnet.rankingmicrosservico.repository.LogRepository;
+//import br.edu.infnet.rankingmicrosservico.repository.LogRepository;
 import lombok.Getter;
 
 @Service
@@ -17,26 +17,26 @@ public class LogService {
 
 	private String errorMessage;
 	
-	@Autowired
-	private LogRepository logRepository;
+//	@Autowired
+//	private LogRepository logRepository;
 	
-	public Turno salvar(Turno itemLog, ItemRanking ranking) {
+//	public Turno salvar(Turno itemLog, ItemRanking ranking) {
 		//Regras de Negócio
-		itemLog.setRanking(ranking);
-		return logRepository.save(itemLog);
-	}
+//		itemLog.setRanking(ranking);
+//		return logRepository.save(itemLog);
+//	}
 	
-	public List<Turno> listAll(){
-		return logRepository.findAllOrderByBatalhaIdAsc();
-	}
+//	public List<Turno> listAll(){
+//		return logRepository.findAllOrderByBatalhaIdAsc();
+//	}
 	
-	public List<Turno> getBatalha(Integer idBatalha, String nomeUsuario) {
-		return logRepository.findBatalha(idBatalha, nomeUsuario);
-	}
+//	public List<Turno> getBatalha(Integer idBatalha, String nomeUsuario) {
+//		return logRepository.findBatalha(idBatalha, nomeUsuario);
+//	}
 	
-	public void delete(Integer id_ItemLog) {
-		logRepository.deleteById(id_ItemLog);
-	}
+//	public void delete(Integer id_ItemLog) {
+//		logRepository.deleteById(id_ItemLog);
+//	}
 	
 	public List<ItemRanking> obterRanking() {
 		

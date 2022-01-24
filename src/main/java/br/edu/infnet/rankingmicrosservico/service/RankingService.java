@@ -38,7 +38,8 @@ public class RankingService {
 	@CacheEvict(value="rankingItem", allEntries = true)
 	public Boolean calculaRanking(Integer batalhaId, String nomeUsuario) {
 
-		final List<Turno> batalha = this.logService.getBatalha(batalhaId, nomeUsuario);
+//		final List<Turno> batalha = this.logService.getBatalha(batalhaId, nomeUsuario);
+		final List<Turno> batalha = null;
 		
 		if(batalha.isEmpty()) 
 		{
@@ -70,13 +71,15 @@ public class RankingService {
 		final String nomeHeroi = primeiroTurno.getHeroi();
 
 		// ADICIONAR ID DE HEROI NO TURNO?
-		Heroi heroi = this.heroiService.obterPorNome(nomeHeroi);
+//		Heroi heroi = this.heroiService.obterPorNome(nomeHeroi);
+		Heroi heroi = null;
 		final AtomicInteger pontosDeVidaHeroi = new AtomicInteger(heroi.getPontosDeVida());
 
 		final String nomeMonstro = primeiroTurno.getMonstro();
 
 		// ADICIONAR ID DE HEROI NO TURNO?
-		Heroi monstro = this.heroiService.obterPorNome(nomeMonstro);
+//		Heroi monstro = this.heroiService.obterPorNome(nomeMonstro);
+		Heroi monstro = null;
 		final AtomicInteger pontosDeVidaMonstro = new AtomicInteger(monstro.getPontosDeVida());
 		
 		AtomicInteger turnosAteTerminar = new AtomicInteger();
