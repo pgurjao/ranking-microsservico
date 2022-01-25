@@ -29,6 +29,10 @@ public class SegurancaConfig extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 			.antMatchers( HttpMethod.GET, "/ranking/")
 			.permitAll()
+			.and()
+			.authorizeHttpRequests()
+			.antMatchers("/actuator/**")
+			.permitAll()
 			
 			.anyRequest().authenticated()
 			.and()
