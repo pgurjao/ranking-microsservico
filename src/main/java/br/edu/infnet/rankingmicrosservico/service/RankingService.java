@@ -1,5 +1,6 @@
 package br.edu.infnet.rankingmicrosservico.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -10,11 +11,16 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+//import com.auth0.jwt.algorithms.Algorithm;
+
+import br.edu.infnet.rankingmicrosservico.dtos.UsuarioAutenticado;
 import br.edu.infnet.rankingmicrosservico.enums.AtacanteEnum;
 import br.edu.infnet.rankingmicrosservico.model.Heroi;
 import br.edu.infnet.rankingmicrosservico.model.ItemRanking;
 import br.edu.infnet.rankingmicrosservico.model.Turno;
 import br.edu.infnet.rankingmicrosservico.repository.RankingRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Getter;
 
 @Service
@@ -35,11 +41,23 @@ public class RankingService {
 
 	private String errorMessage;
 	
+	@Value("${jwtSigningKey}")
+	private String jwtSigningKey;
+	
 	@CacheEvict(value="rankingItem", allEntries = true)
-	public Boolean calculaRanking(Integer batalhaId, String nomeUsuario) {
+	public Boolean calculaRanking(Integer batalhaId, UsuarioAutenticado usuarioAutenticado) {
 
-//		final List<Turno> batalha = this.logService.getBatalha(batalhaId, nomeUsuario);
-		final List<Turno> batalha = null;
+		final int id = usuarioAutenticado.getId();
+		final String nomeUsuario = usuarioAutenticado.getUsername();
+		
+		final String token = Jwts.builder()
+			.setSubject( Integer.toString( id ) )
+			.claim("username", nomeUsuario)
+			.signWith( SignatureAlgorithm.HS256 , this.jwtSigningKey)
+			.compact();			
+		
+		
+		final List<Turno> batalha = this.logService.getBatalha(token,batalhaId);
 		
 		if(batalha.isEmpty()) 
 		{

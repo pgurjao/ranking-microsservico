@@ -52,7 +52,7 @@ public class RankingController {
 		
 		UsuarioAutenticado usuario = (UsuarioAutenticado) auth.getPrincipal();
 		
-		if (!rankingService.calculaRanking(batalhaId, usuario.getUsername())) {
+		if (!rankingService.calculaRanking(batalhaId, usuario)) {
 			return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN)
 			.body(rankingService.getErrorMessage());
 		} else {
